@@ -1,5 +1,6 @@
 let express = require('express');
 let app = express();
+app.set('port', (process.env.PORT || 5000));
 let firebase = require('firebase');
 firebase.initializeApp({
   apiKey: "AIzaSyBzGpgnK1Uh-sYTTfLbcxOg585OHyLRrfE",
@@ -27,4 +28,11 @@ login({
     if(err) console.error(err);
     if(matching[message.senderID]) api.sendMessage(message.body, matching[message.senderID]);
   });
+});
+app.get('/', function(request, response) {
+  response.render('pages/index');
+});
+
+app.listen(app.get('port'), function() {
+  console.log('Node app is running on port', app.get('port'));
 });
